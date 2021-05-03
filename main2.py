@@ -13,12 +13,12 @@ import random
 
 
 app = Flask(__name__, static_url_path='/static')
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = #Your Secret Flask Key Here
 
-DB_host = '127.0.0.1'
-DB_user = 'postgres'
-DB_password = 'Redwings!'
-DB_name= 'whoishuman'
+DB_host = #Your 
+DB_user = #DB
+DB_password = #Info
+DB_name= #Here
 
 def write_to_db(data):
     conn = psycopg2.connect(dbname=DB_name, user=DB_user, password=DB_password, host=DB_host)
@@ -105,7 +105,7 @@ def home():
     return render_template('loading.html')
 
 #Clarafai all scope API key
-# my_key = '55572434d01d483793322ceedcfbcbda'
+# my_key = '#Your Clarafai All Scope Key'
 facesource = 'https://thispersondoesnotexist.com/image'
 
 
@@ -115,7 +115,7 @@ channel = ClarifaiChannel.get_grpc_channel()
 stub = service_pb2_grpc.V2Stub(ClarifaiChannel.get_grpc_channel())
 
 # This is how you authenticate.
-metadata = (( 'authorization', 'Key 55572434d01d483793322ceedcfbcbda'),)
+metadata = (( 'authorization', 'Key #Your Clarafai All Scope Key'),)
 
 requestc = service_pb2.PostModelOutputsRequest(
     # This is the model ID of a publicly available General model.
