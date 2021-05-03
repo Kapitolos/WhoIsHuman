@@ -1,0 +1,140 @@
+#signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20%;
+
+}
+
+
+
+#nextbutton {
+    margin-top: 3%;
+    margin-left: 42%;
+    margin-bottom: 3%;
+    padding: 10px;
+    color: whitesmoke;
+    background-color: rgb(11, 210, 245);
+    cursor: pointer;
+    text-decoration: none;
+    width: 10%;
+}
+
+a {
+    text-decoration: none;
+}
+
+#babybutton {
+    margin-top: 5%;
+    padding: 10px;
+    color: whitesmoke;
+    background-color: rgb(55, 148, 165);
+    cursor: pointer;
+    text-decoration: none;
+    width: 20%;
+}
+
+#cardpage {
+    background: linear-gradient(#75878f, #121535);
+  
+}
+
+#loadingpage {
+    background: whitesmoke;
+}
+
+#loading {
+    text-align: center;
+    margin-top: 25%;
+    overflow: hidden;
+    
+}
+
+.loadingbuttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#loading1 {
+    overflow: hidden; 
+    white-space: nowrap; 
+    margin: 0 auto; 
+    letter-spacing: .15em; 
+    animation: 
+      typing 3.5s steps(40, end);
+}
+
+#loading2 {
+    overflow: hidden; 
+    white-space: nowrap; 
+    margin: 0 auto; 
+    letter-spacing: .15em; 
+    animation-delay: 6.5s;
+    width: 65%;
+    animation: 
+      typing2 3.5s steps(40, end);
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes typing2 {
+    from { width: 0 }
+    to { width: 65% }
+  }
+
+@keyframes colorflash {
+    0% {background: linear-gradient(#f7de00, #fcfbd7ec)}
+    25% {background: linear-gradient(#fae848, #f5f4adec)}
+    50% {background: linear-gradient(#fff27e, #eceb9cec)}
+    75% {background: linear-gradient(#f1eaaa, #fffd79ec)}
+    100% {background: linear-gradient(#fcfae9, #fcf810ec)}
+}
+
+
+.card {
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+background-color: black;
+transition: 1.3s;
+width: 65%;
+padding: 2%;
+color: whitesmoke;
+margin-top: 2%;
+border-radius: 25px;
+cursor: pointer;
+}
+
+.card:hover {
+box-shadow: 0 30px 40px 0 rgba(0,0,0,0.2);
+}
+
+.cardselect {
+background: linear-gradient(#fcfae9, #fcf810ec);
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+transition: 1.3s;
+width: 65%;
+padding: 2%;
+color: black;
+margin-top: 2%;
+border-radius: 25px;
+cursor: pointer;
+animation: colorflash .5s;
+}
+
+#cardisolate {
+    color: blue;
+}
+
+.container {
+padding: 2px 16px;
+text-align: center;
+}
+
+.cardgrid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}

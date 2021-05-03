@@ -1,0 +1,82 @@
+{%extends 'base.html'%}
+{% block content %}
+<div id="cardpage">
+<div class="cardgrid">
+<button class="card" id="card" onclick="cardselect()">
+<img src="{{faceinfolist[0]['picture']}}" style="width: 100%;">
+<div class="container">
+    <h4><b>{{faceinfolist[0]['name']}}</b></h4> 
+    <p>{{faceinfolist[0]['age']}}</p> 
+    <p>{{faceinfolist[0]['job']}}</p>
+  </div>
+</button>
+<button class="card" id="card2" onclick="cardselect2()">
+<img src="{{faceinfolist[1]['picture']}}" style="width: 100%;">
+<div class="container">
+    <h4><b>{{faceinfolist[1]['name']}}</b></h4> 
+    <p>{{faceinfolist[1]['age']}}</p> 
+    <p>{{faceinfolist[1]['job']}}</p>
+  </div>
+</button>
+<button class="card" id="card3" onclick="cardselect3()">
+<img src="{{faceinfolist[2]['picture']}}" style="width: 100%;">
+<div class="container">
+    <h4><b>{{faceinfolist[2]['name']}}</b></h4> 
+    <p>{{faceinfolist[2]['age']}}</p> 
+    <p>{{faceinfolist[2]['job']}}</p>
+  </div>
+</button>
+<button class="card" id="card4" onclick="cardselect4()">
+<img src="{{faceinfolist[3]['picture']}}" style="width: 100%;">
+<div class="container">
+    <h4><b>{{faceinfolist[3]['name']}}</b></h4> 
+    <p>{{faceinfolist[3]['age']}}</p> 
+    <p>{{faceinfolist[3]['job']}}</p>
+  </div>
+</button>
+<button class="card" id="card5" onclick="cardselect5()">
+<img src="{{faceinfolist[4]['picture']}}" style="width: 100%;">
+<div class="container">
+    <h4><b>{{faceinfolist[4]['name']}}</b></h4> 
+    <p>{{faceinfolist[4]['age']}}</p> 
+    <p>{{faceinfolist[4]['job']}}</p>
+    </div>
+</button>
+<button class="card" id="card6" onclick="cardselect6()">
+<img src="{{humanface}}" style="width: 100%;">
+<div class="container">
+    <h4><b>{{faceinfolist[5]['name']}}</b></h4> 
+    <p>{{faceinfolist[5]['age']}}</p> 
+    <p>{{faceinfolist[5]['job']}}</p>
+    </div>
+</button>
+<button class="card" id="card7" onclick="cardselect7()">
+    <img src="{{faceinfolist[6]['picture']}}" style="width: 100%;">
+    <div class="container">
+        <h4><b>{{faceinfolist[6]['name']}}</b></h4> 
+        <p>{{faceinfolist[6]['age']}}</p> 
+        <p>{{faceinfolist[6]['job']}}</p>
+        </div>
+    </button>
+<button class="card" id="card8" onclick="cardselect8()">
+    <img src="{{faceinfolist[7]['picture']}}" style="width: 100%;">
+    <div class="container">
+        <h4><b>{{faceinfolist[7]['name']}}</b></h4> 
+        <p>{{faceinfolist[7]['age']}}</p> 
+        <p>{{faceinfolist[7]['job']}}</p>
+        </div>
+    </button>
+<button class="card" id="card9" onclick="cardselect9()">
+    <img src="{{faceinfolist[8]['picture']}}" style="width: 100%;">
+    <div class="container">
+        <h4><b>{{faceinfolist[8]['name']}}</b></h4> 
+        <p>{{faceinfolist[8]['age']}}</p> 
+        <p>{{faceinfolist[8]['job']}}</p>
+        </div>
+    </button>
+</div>
+<button id="nextbutton">
+    <a href="/guess"><p>Submit Guess</p></a>
+</button>
+</div>
+{% endblock %} 
