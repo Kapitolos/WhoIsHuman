@@ -1,7 +1,13 @@
-function sendguess() {
-var isselected = document.getElementById("cardisolate");
 
-}
+function sendguess() {
+  console.log("function fired");
+  var isselected = document.getElementsByClassName("cardselect");
+  document.getElementById('hiddenField').value = isselected[0].value;
+  document.getElementById("guessform").submit();
+  console.log(isselected[0]);
+  console.log(isselected[1]);
+  }
+
 
 function cardselect() {
     document.getElementById("card").id = ("cardisolate");
@@ -115,4 +121,37 @@ function cardselect9() {
 
 
 
+// target the parent of the cards and remove the card children. Then scramble the cards in an array and append the children back.
 
+function shuffle(sourceArray) {
+  for (var i = 0; i < sourceArray.length - 1; i++) {
+      var j = i + Math.floor(Math.random() * (sourceArray.length - i));
+
+      var temp = sourceArray[j];
+      sourceArray[j] = sourceArray[i];
+      sourceArray[i] = temp;
+  }
+  return sourceArray;
+}
+
+
+function shuffledeck() {
+  deck = document.querySelectorAll(".card");
+  deckparent = document.getElementById("cardgrid");
+  for (i = 0; i < deck.length; i++) {
+    deck[i].parentElement.removeChild(deck[i]);
+  }
+  var mutabledeck = []
+  for (i= 0; i < deck.length; i++) {
+    mutabledeck.push(deck[i]);
+  }
+  var randomdeck = shuffle(mutabledeck);
+  
+  
+  for (i = 0; i < randomdeck.length; i++) {
+    deckparent.appendChild(randomdeck[i]);}
+    console.log("shuffled");
+  } 
+
+
+  

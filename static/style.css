@@ -5,7 +5,45 @@
     margin-top: 20%;
 
 }
+#totalbody {
+    background: rgb(17, 19, 31);
+    color: white;
+}
 
+/* #signinbody {
+    background: linear-gradient(#75878f, #121535);
+}
+
+#guessbody {
+    background: linear-gradient(#75878f, #121535);
+}
+
+#cardpage{
+    background: linear-gradient(#75878f, #121535);
+}
+
+#registerbody{
+    background: linear-gradient(#75878f, #121535);
+}
+
+#loadingbody{
+    background: linear-gradient(#75878f, #121535);
+} */
+
+#cardpage {
+    background: linear-gradient(#75878f, #121535);
+}
+
+#guess {
+    text-align: center;
+    margin-top: 25%;
+}
+
+#register {
+    display: flex;
+    text-align: center;
+    margin-top: 25%;
+}
 
 
 #nextbutton {
@@ -34,14 +72,6 @@ a {
     width: 20%;
 }
 
-#cardpage {
-    background: linear-gradient(#75878f, #121535);
-  
-}
-
-#loadingpage {
-    background: whitesmoke;
-}
 
 #loading {
     text-align: center;
