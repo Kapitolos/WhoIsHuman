@@ -9,19 +9,23 @@ from clarifai_grpc.grpc.api.status import status_code_pb2, status_pb2
 import json
 import csv
 import psycopg2
+from psycopg2.extras import RealDictCursor
 import random
 
 
 app = Flask(__name__, static_url_path='/static')
-app.secret_key = #Your Secret Flask Key Here
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-DB_host = #Your 
-DB_user = #DB
-DB_password = #Info
-DB_name= #Here
+DB_host = '127.0.0.1'
+DB_user = 'postgres'
+DB_password = 'Redwings!'
+DB_name= 'whoishuman'
+cursor_factory = RealDictCursor
+
+activeuserid = 0
 
 def write_to_db(data):
-    conn = psycopg2.connect(dbname=DB_name, user=DB_user, password=DB_password, host=DB_host)
+    conn = psycopg2.connect(dbname=DB_name, user=DB_user, password=DB_password, host=DB_host,  cursor_factory=RealDictCursor)
     cur = conn.cursor()
     cur.execute("SELECT * FROM users;")
     db_users = cur.fetchall()
@@ -32,14 +36,17 @@ def write_to_db(data):
     fullname = data["fullname"]
     userage = data['age']
     userjob = data['occupation']
+    score = 0
     cur.execute("""
-    INSERT INTO users (username, password, fullname, userage, userjob, userid)
-    VALUES (%s,%s,%s,%s,%s,%s);
+    INSERT INTO users (username, password, fullname, userage, userjob, userid, score)
+    VALUES (%s,%s,%s,%s,%s,%s,%s);
     """,
-    (username, password, fullname, userage, userjob, userid))
+    (username, password, fullname, userage, userjob, userid, score))
     conn.commit()
     cur.close()
     conn.close()
+    global activeuserid
+    activeuserid = userid
     return redirect("index")
 
 def signinfunc(data):
@@ -50,11 +57,11 @@ def signinfunc(data):
     isin = False
     error = None
     for i in db_users:
+        print(i)
         if data["username"] and data["password"] in i:
-            # test=(json.dumps(i))
-            # test2 = json.loads(test)
-            # hero = Character(test2[5],test2[2],test2[3],test2[6],test2[7],test2[8],test2[9],test2[10],test2[11],test2[12],test2[13],test2[14],test2[15],test2[16])
             isin = True
+            global activeuserid
+            activeuserid = i[4]
         else:
             print("not found")
     if isin == False:
@@ -62,8 +69,35 @@ def signinfunc(data):
         flash('Not Found')
         return render_template("signin.html", error=error)
     else:
-        flash('You were successfully logged in')
         return redirect('index')
+
+def get_guess(data):
+    conn = psycopg2.connect(dbname=DB_name, user=DB_user, password=DB_password, host=DB_host,  cursor_factory=RealDictCursor)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users;")
+    db_users = cur.fetchall()
+    score = db_users[activeuserid]['score']
+    ishuman = ""
+    print(data['id'])
+    if data['id'] == "fake":
+        ishuman = "They were fake! Try again!"
+        return render_template("guess.html", ishuman=ishuman, score=score)
+    elif data['id'] == "real":
+        ishuman = "You got it! Point added to your score."
+        score += 1
+        cur.execute("""
+        INSERT INTO users (score)
+        VALUES (%s);
+        """,
+        [score])
+        conn.commit()
+        cur.close()
+        conn.close()
+        return render_template("guess.html", ishuman=ishuman, score=score)
+    else:
+        ishuman = "Something went wrong"
+        return render_template("guess.html", ishuman=ishuman)
+
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -72,9 +106,7 @@ def register():
         data = request.form.to_dict()
         print(data)
         return write_to_db(data)
-        # return render_template('register.html')
     else:
-        # error = 'Invalid credentials'
         return render_template('register.html')
 
 @app.route("/signin", methods=["POST", "GET"])
@@ -89,10 +121,17 @@ def signcheck():
 
 
 
-@app.route('/guess', methods=["POST", "GET"])
-def guess():
-    guess = "You got it!"
-    return render_template('guess.html', guess=guess)
+# @app.route('/guess', methods=["POST", "GET"])
+# def guess():
+#     # if request.method == 'POST':
+#     #     data = request.form.to_dict()
+#     #     print("made it here")
+#     #     print(data)
+#     #     return render_template('guess.html')
+#     # else:
+#     # # guess = "You got it!"
+#     #     print("no data sent")
+#     return render_template('guess.html')
 
 
 
@@ -104,8 +143,6 @@ def guess():
 def home():
     return render_template('loading.html')
 
-#Clarafai all scope API key
-# my_key = '#Your Clarafai All Scope Key'
 facesource = 'https://thispersondoesnotexist.com/image'
 
 
@@ -114,8 +151,8 @@ channel = ClarifaiChannel.get_grpc_channel()
 
 stub = service_pb2_grpc.V2Stub(ClarifaiChannel.get_grpc_channel())
 
-# This is how you authenticate.
-metadata = (( 'authorization', 'Key #Your Clarafai All Scope Key'),)
+# This is how you authenticate. #Clarafai all scope API key
+metadata = (( 'authorization', 'Key 423b2ebff5f541f7abb9ec342604cf85'),)
 
 requestc = service_pb2.PostModelOutputsRequest(
     # This is the model ID of a publicly available General model.
@@ -154,11 +191,6 @@ def getfaces():
         faceinfo['picture'] = f'./static/assets/images/img{i}.png'
         faceinfolist.append(faceinfo)
         print("face added")
-
-# getfaces()
-
-
-# print(faceinfolist[0])
 
 def gender():
     for i in faceinfolist:
@@ -237,23 +269,17 @@ def job():
 
 @app.route('/index', methods=["POST", "GET"])
 def game():
-    getfaces()
-    job()
-    age()
-    gender()
-    # humanface = f'./static/assets/images/human{random.randint(1, 35)}.jpg'
-    humanface = f'./static/assets/images/human2.jpg'
-    return render_template('index.html', faceinfolist=faceinfolist, humanface=humanface)
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        return get_guess(data)
+    else:
+        getfaces()
+        job()
+        age()
+        gender()
+        humanface = f'./static/assets/images/human{random.randrange(1,35)}.jpg'
+        return render_template('index.html', faceinfolist=faceinfolist, humanface=humanface)
 
-# for i in faceinfolist:
-#     if 'man' in i:
-#         if i['man'] > .90:
-#             print('Over 90')
-#
-#         else:
-#             print('Under 90')
-#     else:
-#         print('This things to do')
 
 
 
