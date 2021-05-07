@@ -77,6 +77,10 @@ def get_guess(data):
     cur.execute("SELECT * FROM users;")
     db_users = cur.fetchall()
     score = db_users[activeuserid]['score']
+    name = db_users[activeuserid]['username']
+    print(name)
+    print(activeuserid)
+    print(f"Score is {score}")
     ishuman = ""
     print(data['id'])
     if data['id'] == "fake":
@@ -85,11 +89,14 @@ def get_guess(data):
     elif data['id'] == "real":
         ishuman = "You got it! Point added to your score."
         score += 1
-        cur.execute("""
-        INSERT INTO users (score)
-        VALUES (%s);
+        print(f"Score is now {score}")
+        cur.execute(f"""
+        UPDATE users 
+        SET score = {score}
+        WHERE userid = {activeuserid}
+        ;
         """,
-        [score])
+        )
         conn.commit()
         cur.close()
         conn.close()
