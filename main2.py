@@ -11,14 +11,15 @@ import csv
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import random
+import os
 
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 DB_host = '127.0.0.1'
-DB_user = 'postgres'
-DB_password = 'Redwings!'
+DB_user = os.environ.get('DB_user')
+DB_password = os.environ.get('DB_password')
 DB_name= 'whoishuman'
 cursor_factory = RealDictCursor
 
@@ -135,7 +136,7 @@ channel = ClarifaiChannel.get_grpc_channel()
 stub = service_pb2_grpc.V2Stub(ClarifaiChannel.get_grpc_channel())
 
 # This is how you authenticate. #Clarafai all scope API key
-metadata = (( 'authorization', 'Key 423b2ebff5f541f7abb9ec342604cf85'),)
+metadata = (( 'authorization', f'Key {os.environ.get("Clarafai_All_Scope_Key")}'),)
 
 requestc = service_pb2.PostModelOutputsRequest(
     # This is the model ID of a publicly available General model.
@@ -167,12 +168,9 @@ def getfaces():
         faceinfo = {}
         for concept in response.outputs[0].data.concepts:
             faceinfo[concept.name] = concept.value
-            # faceinfolist[i].append(faceinfo)
-                # print(faceinfo)
         del response2
         faceinfo['picture'] = f'./static/assets/images/img{i}.png'
         faceinfolist.append(faceinfo)
-        # print("face added")
 
 
 def gender():
@@ -185,12 +183,9 @@ def gender():
                 fakenamepage = soup.prettify()
                 parsename = json.loads(fakenamepage)
                 facename = parsename["name"]
-                # print(facename)
                 i['name'] = facename
-                # return faceinfolist
             else:
                 i['name'] = "I think it's Frank"
-                # return faceinfolist
 
         elif 'woman' in i:
             if i['woman'] or ['girl'] > .90:
@@ -201,10 +196,8 @@ def gender():
                 parsename = json.loads(fakenamepage)
                 facename = parsename["name"]
                 i['name'] = facename
-                # return faceinfolist
             else:
                 i['name'] = "I can't remember...Sharon?"
-                # return faceinfolist
 
         else:
             nameurltt = 'https://api.namefake.com/canadian/female/'
@@ -214,7 +207,6 @@ def gender():
             parsename = json.loads(fakenamepage)
             facename = parsename["name"]
             i['name'] = "Unknown Name"
-            # return faceinfolist
 
 def age():
     for i in faceinfolist:
@@ -228,7 +220,6 @@ def age():
             i['age'] = "Adult"
         else:
             i['age'] = "Senior"
-    # return faceinfolist
 
 
 def job():
@@ -253,7 +244,6 @@ def job():
             i['job'] = "Engineer"
         else:
             i['job'] = "Unemployed"
-    # return faceinfolist
 
 @app.route('/index', methods=["POST", "GET"])
 def game():
@@ -265,7 +255,7 @@ def game():
         job()
         age()
         gender()
-        humanface = f'./static/assets/images/human{random.randrange(1,35)}.jpg'
+        humanface = f'./static/assets/images/human{random.randrange(1,10)}.jpg'
         return render_template('index.html', faceinfolist=faceinfolist, humanface=humanface)
 
 
