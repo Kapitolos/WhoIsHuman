@@ -157,6 +157,7 @@ def getfaces():
     for i in range(9):
         response2 = requests.get(facesource, stream=True)
         with open(f'./static/assets/images/img{i}.png', 'wb') as out_file:
+            print("Saved face to file")
             shutil.copyfileobj(response2.raw, out_file)
             requestc = service_pb2.PostModelOutputsRequest(
                 # This is the model ID of a publicly available General model. You may use any other public or custom model ID.
@@ -170,6 +171,7 @@ def getfaces():
             faceinfo[concept.name] = concept.value
         del response2
         faceinfo['picture'] = f'./static/assets/images/img{i}.png'
+        print("Added Face")
         faceinfolist.append(faceinfo)
 
 
@@ -210,13 +212,14 @@ def gender():
 
 def age():
     for i in faceinfolist:
+        print(i)
         if 'young' in i:
             i['age'] = "Young"
         elif 'child' or 'adolescent' in i:
             i['age'] = "Young"
-        elif 'preschool' in i:
+        elif 'preschool' or 'elementary school' in i:
             i['age'] = "Young"
-        elif 'adult' in i:
+        elif 'adult' or 'festival' or 'red carpet' in i:
             i['age'] = "Adult"
         else:
             i['age'] = "Senior"
@@ -238,10 +241,12 @@ def job():
             i['job'] = "Entrepreneur"
         elif 'pretty' in i:
             i['job'] = "Performing Arts"
-        elif 'young' in i:
+        elif 'young' or 'preschool' or 'elementary school' in i:
             i['job'] = "Student"
         elif 'nature' in i:
             i['job'] = "Engineer"
+        elif 'writer' in i:
+            i['job'] = "Writer"
         else:
             i['job'] = "Unemployed"
 
@@ -255,6 +260,7 @@ def game():
         job()
         age()
         gender()
+        print("Fired all API's")
         humanface = f'./static/assets/images/human{random.randrange(1,10)}.jpg'
         return render_template('index.html', faceinfolist=faceinfolist, humanface=humanface)
 
