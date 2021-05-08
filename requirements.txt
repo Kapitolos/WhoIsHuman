@@ -1,6 +1,7 @@
 flask
 bs4
-shutil
 Pillow
 clarifai
+clarifi-grpc
 psycopg2
+requests
