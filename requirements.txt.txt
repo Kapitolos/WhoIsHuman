@@ -1,0 +1,6 @@
+flask
+bs4
+shutil
+Pillow
+clarifai
+psycopg2
