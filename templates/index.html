@@ -2,6 +2,7 @@
 {% block content %}
 <body onload="shuffledeck()">
 <div id="cardpage">
+    <h1 id="instruction">Click your selection and submit your guess!</h1>
 <div class="cardgrid" id="cardgrid">
 <button class="card" id="card" onclick="cardselect()" value="fake">
 <img src="{{faceinfolist[0]['picture']}}" style="width: 100%;">
@@ -80,9 +81,6 @@
 <button id="nextbutton" onclick="sendguess()">Submitguess</button>
 <form id="guessform" method="POST">
     <input type='hidden' id='hiddenField' name='id' value='' />
-    <!-- <a href="/guess"> -->
-        <p>Submit Guess</p>
-    <!-- </a> -->
 </form>
 </div>
 </body>
