@@ -23,6 +23,7 @@ DB_name= 'whoishuman'
 cursor_factory = RealDictCursor
 
 activeuserid = 0
+activeusername = ""
 
 def write_to_db(data):
     conn = psycopg2.connect(dbname=DB_name, user=DB_user, password=DB_password, host=DB_host,  cursor_factory=RealDictCursor)
@@ -30,7 +31,6 @@ def write_to_db(data):
     cur.execute("SELECT * FROM users;")
     db_users = cur.fetchall()
     userid = (len(db_users))
-    print(userid)
     username = data["username"]
     password = data["password"]
     fullname = data["fullname"]
@@ -57,11 +57,12 @@ def signinfunc(data):
     isin = False
     error = None
     for i in db_users:
-        print(i)
         if data["username"] and data["password"] in i:
             isin = True
             global activeuserid
-            activeuserid = i[4]
+            activeuserid = i[5]
+            global activeusername
+            activeusername = data["username"]
         else:
             print("not found")
     if isin == False:
@@ -78,18 +79,13 @@ def get_guess(data):
     db_users = cur.fetchall()
     score = db_users[activeuserid]['score']
     name = db_users[activeuserid]['username']
-    print(name)
-    print(activeuserid)
-    print(f"Score is {score}")
     ishuman = ""
-    print(data['id'])
     if data['id'] == "fake":
         ishuman = "They were fake! Try again!"
         return render_template("guess.html", ishuman=ishuman, score=score)
     elif data['id'] == "real":
         ishuman = "You got it! Point added to your score."
         score += 1
-        print(f"Score is now {score}")
         cur.execute(f"""
         UPDATE users 
         SET score = {score}
@@ -120,30 +116,10 @@ def register():
 def signcheck():
     if request.method == 'POST':
         data = request.form.to_dict()
-        print(data)
         return signinfunc(data)
     else:
         print("exit?")
         return render_template('signin.html')
-
-
-
-# @app.route('/guess', methods=["POST", "GET"])
-# def guess():
-#     # if request.method == 'POST':
-#     #     data = request.form.to_dict()
-#     #     print("made it here")
-#     #     print(data)
-#     #     return render_template('guess.html')
-#     # else:
-#     # # guess = "You got it!"
-#     #     print("no data sent")
-#     return render_template('guess.html')
-
-
-
-
-
 
 
 @app.route('/')
@@ -168,7 +144,6 @@ requestc = service_pb2.PostModelOutputsRequest(
       resources_pb2.Input(data=resources_pb2.Data(image=resources_pb2.Image(url=f"{facesource}")))
     ])
 response = stub.PostModelOutputs(requestc, metadata=metadata)
-# print(response.outputs)
 
 if response.status.code != status_code_pb2.SUCCESS:
     raise Exception("Request failed, status code: " + str(response.status.code))
@@ -197,7 +172,8 @@ def getfaces():
         del response2
         faceinfo['picture'] = f'./static/assets/images/img{i}.png'
         faceinfolist.append(faceinfo)
-        print("face added")
+        # print("face added")
+
 
 def gender():
     for i in faceinfolist:
@@ -209,10 +185,12 @@ def gender():
                 fakenamepage = soup.prettify()
                 parsename = json.loads(fakenamepage)
                 facename = parsename["name"]
-                print(facename)
+                # print(facename)
                 i['name'] = facename
+                # return faceinfolist
             else:
                 i['name'] = "I think it's Frank"
+                # return faceinfolist
 
         elif 'woman' in i:
             if i['woman'] or ['girl'] > .90:
@@ -222,10 +200,11 @@ def gender():
                 fakenamepage = soup.prettify()
                 parsename = json.loads(fakenamepage)
                 facename = parsename["name"]
-                print(facename)
                 i['name'] = facename
+                # return faceinfolist
             else:
                 i['name'] = "I can't remember...Sharon?"
+                # return faceinfolist
 
         else:
             nameurltt = 'https://api.namefake.com/canadian/female/'
@@ -234,8 +213,8 @@ def gender():
             fakenamepage = soup.prettify()
             parsename = json.loads(fakenamepage)
             facename = parsename["name"]
-            print(facename)
             i['name'] = "Unknown Name"
+            # return faceinfolist
 
 def age():
     for i in faceinfolist:
@@ -249,6 +228,7 @@ def age():
             i['age'] = "Adult"
         else:
             i['age'] = "Senior"
+    # return faceinfolist
 
 
 def job():
@@ -273,6 +253,7 @@ def job():
             i['job'] = "Engineer"
         else:
             i['job'] = "Unemployed"
+    # return faceinfolist
 
 @app.route('/index', methods=["POST", "GET"])
 def game():
