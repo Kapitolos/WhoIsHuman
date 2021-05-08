@@ -2,6 +2,7 @@ flask
 bs4
 Pillow
 clarifai
+clarifai_grpc
 psycopg2
 requests
 gunicorn 
