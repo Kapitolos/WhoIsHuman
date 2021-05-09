@@ -17,10 +17,10 @@ import os
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-DB_host = '127.0.0.1'
+DB_host = os.environ.get('DB_host')
 DB_user = os.environ.get('DB_user')
 DB_password = os.environ.get('DB_password')
-DB_name= 'whoishuman'
+DB_name= os.environ.get('DB_name')
 cursor_factory = RealDictCursor
 
 activeuserid = 0
