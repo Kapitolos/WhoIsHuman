@@ -12,7 +12,6 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import random
 import os
-from resizeimage import resizeimage
 
 
 app = Flask(__name__, static_url_path='/static')
