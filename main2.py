@@ -12,6 +12,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import random
 import os
+from resizeimage import resizeimage
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -255,9 +256,9 @@ def game():
         return get_guess(data)
     else:
         getfaces()
-        job()
-        age()
-        gender()
+        # job()
+        # age()
+        # gender()
         print("Fired all API's")
         humanface = f'./static/assets/images/human{random.randrange(1,10)}.jpg'
         return render_template('index.html', faceinfolist=faceinfolist, humanface=humanface)
