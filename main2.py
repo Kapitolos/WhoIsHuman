@@ -35,14 +35,12 @@ def write_to_db(data):
     username = data["username"]
     password = data["password"]
     fullname = data["fullname"]
-    userage = data['age']
-    userjob = data['occupation']
     score = 0
     cur.execute("""
-    INSERT INTO users (username, password, fullname, userage, userjob, userid, score)
-    VALUES (%s,%s,%s,%s,%s,%s,%s);
+    INSERT INTO users (username, password, fullname, userid, score)
+    VALUES (%s,%s,%s,%s,%s);
     """,
-    (username, password, fullname, userage, userjob, userid, score))
+    (username, password, fullname, userid, score))
     conn.commit()
     cur.close()
     conn.close()
