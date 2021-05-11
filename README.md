@@ -5,6 +5,8 @@ Nine cards of individuals are presented with only one being an actual person. Si
 
 This first push includes a functioning registration for new users as well presents generated faces, names, and pulls an age catergory as well as occupation from a premade list which corralates to a facial recognition API's response. 
 
+To do:
+Converting to async for api functions. 
 
 
 
