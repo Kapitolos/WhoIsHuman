@@ -12,7 +12,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import random
 import os
-
+import asyncio
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -151,9 +151,11 @@ if response.status.code != status_code_pb2.SUCCESS:
 faceinfolist = []
 
 
-def getfaces():
+
+async def getfaces():
     for i in range(9):
         response2 = requests.get(facesource, stream=True)
+        #do I need a function here to pass this async???
         with open(f'./static/assets/images/img{i}.png', 'wb') as out_file:
             print("Saved face to file")
             shutil.copyfileobj(response2.raw, out_file)
@@ -173,7 +175,8 @@ def getfaces():
         faceinfolist.append(faceinfo)
 
 
-def gender():
+
+async def gender():
     for i in faceinfolist:
         if 'man' in i:
             if i['man'] or i['guy'] > .90:
@@ -208,7 +211,7 @@ def gender():
             facename = parsename["name"]
             i['name'] = "Unknown Name"
 
-def age():
+async def age():
     for i in faceinfolist:
         print(i)
         if 'young' in i:
@@ -223,7 +226,7 @@ def age():
             i['age'] = "Senior"
 
 
-def job():
+async def job():
     for i in faceinfolist:
         if 'musician' in i:
             i['job'] = "Musician"
@@ -248,16 +251,20 @@ def job():
         else:
             i['job'] = "Unemployed"
 
+async def allinfo():
+	await getfaces()
+	await gender()
+	await job()
+	await age()
+
 @app.route('/index', methods=["POST", "GET"])
 def game():
     if request.method == 'POST':
         data = request.form.to_dict()
         return get_guess(data)
     else:
-        getfaces()
-        job()
-        age()
-        gender()
+        # asyncio.run(getfaces())
+        asyncio.run(allinfo())
         print("Fired all API's")
         humanface = f'./static/assets/images/human{random.randrange(1,10)}.jpg'
         return render_template('index.html', faceinfolist=faceinfolist, humanface=humanface)
