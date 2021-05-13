@@ -155,7 +155,7 @@ function shuffledeck() {
 
 function loading() 
 {
-var timeleft = 20;
+var timeleft = 10;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
@@ -167,12 +167,24 @@ var downloadTimer = setInterval(function(){
 
 function loading2() 
 {
-var timeleft = 20;
+var timeleft = 10;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
   }
   document.getElementById("progressBar2").value = 10 - timeleft;
+  timeleft -= 1;
+}, 1000);
+}
+
+function loading3() 
+{
+var timeleft = 10;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+  }
+  document.getElementById("progressBar3").value = 10 - timeleft;
   timeleft -= 1;
 }, 1000);
 }
