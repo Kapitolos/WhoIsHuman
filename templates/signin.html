@@ -9,7 +9,10 @@
     <h1 id="signintext">Sign In</h1>
     <h3><input type='text' placeholder="Username" name="username" id="username"></h3>
     <h3><input type="text" placeholder="password" name="password" id="password"></h3>
-    <button type="submit" id="loginbutton">Login</button></form>
+    <button type="submit" id="loginbutton" onclick="loading()">Login</button>
+    <progress value="0" max="10" id="progressBar"></progress>
+    </form>
+    
     </div>
     </body>
 {% endblock %} 
