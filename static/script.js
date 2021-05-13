@@ -153,5 +153,27 @@ function shuffledeck() {
     console.log("shuffled");
   } 
 
+function loading() 
+{
+var timeleft = 20;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+  }
+  document.getElementById("progressBar").value = 10 - timeleft;
+  timeleft -= 1;
+}, 1000);
+}
 
+function loading2() 
+{
+var timeleft = 20;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+  }
+  document.getElementById("progressBar2").value = 10 - timeleft;
+  timeleft -= 1;
+}, 1000);
+}
   

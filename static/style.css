@@ -89,7 +89,7 @@ a {
 }
 
 #signintext {
-    margin-left: 15%;
+    margin-left: 28%;
 }
 
 #guessbutton {
@@ -121,7 +121,7 @@ a {
     cursor: pointer;
     font-family: 'Dancing Script', cursive;
     font-size: 14pt;
-    margin-left: 30%;
+    margin-left: 38%;
     margin-bottom: 2%;
 }
 
@@ -225,6 +225,27 @@ text-align: center;
     grid-template-columns: auto auto auto;
 }
 
+#progressBar {
+    margin-left: 17%;
+    padding: 14%;
+}
+
+#progressBar2 {
+    margin-left: 42.4%;
+    padding: 2%;
+    width: 15%;
+}
+
+#username {
+    margin-left: 15%;
+}
+
+
+#password {
+    margin-left: 15%;
+}
+
+
 
 
   @media all and (max-width: 800px) {
@@ -309,6 +330,16 @@ text-align: center;
     #guessbutton {
         font-size: 34pt;
     }
+
+#progressBar {
+    margin-left: 20%;
+    padding: 14%;
+}
+
+#progressBar2 {
+    margin-left: 40%;
+    padding: 7%;
+}
   
 }
 
@@ -334,17 +365,17 @@ text-align: center;
     #loginbutton {
         margin-bottom: 8%;
         font-size: 35pt;
-        margin-left: 20%;
+        margin-left: 26%;
     }
     #signintext {
         font-size: 40pt;
         text-align: center;
     }
     #username {
-        margin-left: 5%;
+        margin-left: 16%;
     }
     #password {
-        margin-left: 5%;
+        margin-left: 16%;
     }
     #register {
         text-align: center;
@@ -400,4 +431,13 @@ text-align: center;
         text-align: center;
         margin-top: 50%;
     }
+
+    #progressBar {
+        margin-left: 18%;
+        padding: 9%;
+    }
+#progressBar2 {
+    margin-left: 28%;
+    padding: 14%;
+}
   }
