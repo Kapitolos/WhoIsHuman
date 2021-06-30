@@ -121,7 +121,7 @@ function cardselect9() {
 
 
 
-// target the parent of the cards and remove the card children. Then scramble the cards in an array and append the children back.
+// targets the parent of the cards and removes the card children. Then scrambles the cards in an array and appends the children back.
 
 function shuffle(sourceArray) {
   for (var i = 0; i < sourceArray.length - 1; i++) {
@@ -153,6 +153,7 @@ function shuffledeck() {
     console.log("shuffled");
   } 
 
+// Loading Bars
 function loading() 
 {
 var timeleft = 10;
@@ -163,6 +164,7 @@ var downloadTimer = setInterval(function(){
   document.getElementById("progressBar").value = 10 - timeleft;
   timeleft -= 1;
 }, 1000);
+document.getElementById("loadingalert").hidden = false;
 }
 
 function loading2() 
@@ -175,6 +177,7 @@ var downloadTimer = setInterval(function(){
   document.getElementById("progressBar2").value = 10 - timeleft;
   timeleft -= 1;
 }, 1000);
+document.getElementById("loadingalert").hidden = false;
 }
 
 function loading3() 
@@ -187,5 +190,6 @@ var downloadTimer = setInterval(function(){
   document.getElementById("progressBar3").value = 10 - timeleft;
   timeleft -= 1;
 }, 1000);
+document.getElementById("loadingalert").hidden = false;
 }
   
