@@ -10,12 +10,13 @@
     <input type="text" id="Usernamereg" name="username"> 
     <h1>Password</h1>
     <input type="text" id="passwordreg" name="password"> 
-    <h1>What is your full name?</h1>
-    <input type="text" id="FullName" name="fullname"> 
     <div>
          <button id="signupbutton" value="submit" onclick="loading3()">Sign Up</button>
     </div>
-    <progress value="0" max="10" id="progressBar3"></progress>
+    <div id="loadingalert" hidden>
+        <progress value="0" max="10" id="progressBar3"></progress>
+        <h3>Loading!</h3>
+    </div>
 </form>
 </div>
 </body>

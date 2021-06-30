@@ -3,14 +3,17 @@
 <body id="signinbody">
 <div id="signin">
     {% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
+    <p id="signinerror" class=error><strong>Whoops! </strong> {{ error }}
     {% endif %}
 <form method="POST">
     <h1 id="signintext">Sign In</h1>
     <h3><input type='text' placeholder="Username" name="username" id="username"></h3>
     <h3><input type="text" placeholder="password" name="password" id="password"></h3>
     <button type="submit" id="loginbutton" onclick="loading()">Login</button>
-    <progress value="0" max="10" id="progressBar"></progress>
+    <div id="loadingalert" hidden>
+        <progress value="0" max="10" id="progressBar"></progress>
+        <h3>Loading!</h3>
+    </div>
     </form>
     
     </div>

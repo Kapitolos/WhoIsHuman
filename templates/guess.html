@@ -2,10 +2,13 @@
 {% block content %}
 <body id="guessbody">
 <div id="guess">
-<h1>{{ishuman}}</h1>
-<h2>Your total score is {{score}}!</h2> 
-<button id="guessbutton" onclick="loading2()"><a href='/index'> Next Round </a></button>
+    <h1>{{ishuman}}</h1>
+    <h2>Your total score is {{score}}!</h2> 
+    <button id="guessbutton" onclick="loading2()"><a href='/index'> Next Round </a></button>
 </div>
-<progress value="0" max="10" id="progressBar2"></progress>
+<div id="loadingalert" hidden>
+    <progress value="0" max="10" id="progressBar2"></progress>
+    <h3 >Loading!</h3>
+</div>
 </body>
 {% endblock %} 
