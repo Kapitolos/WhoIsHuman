@@ -34,13 +34,12 @@ def write_to_db(data):
     userid = (len(db_users))
     username = data["username"]
     password = data["password"]
-    fullname = data["fullname"]
     score = 0
     cur.execute("""
-    INSERT INTO users (username, password, fullname, userid, score)
-    VALUES (%s,%s,%s,%s,%s);
+    INSERT INTO users (username, password, userid, score)
+    VALUES (%s,%s,%s,%s);
     """,
-    (username, password, fullname, userid, score))
+    (username, password, userid, score))
     conn.commit()
     cur.close()
     conn.close()
@@ -176,7 +175,7 @@ async def getfaces():
 
 
 
-async def gender():
+async def fakename():
     for i in faceinfolist:
         if 'man' in i:
             if i['man'] or i['guy'] > .90:
@@ -188,7 +187,7 @@ async def gender():
                 facename = parsename["name"]
                 i['name'] = facename
             else:
-                i['name'] = "I think it's Frank"
+                i['name'] = "John Smith"
 
         elif 'woman' in i:
             if i['woman'] or ['girl'] > .90:
@@ -200,7 +199,7 @@ async def gender():
                 facename = parsename["name"]
                 i['name'] = facename
             else:
-                i['name'] = "I can't remember...Sharon?"
+                i['name'] = "Mrs. Robinson"
 
         else:
             nameurltt = 'https://api.namefake.com/canadian/female/'
@@ -211,51 +210,11 @@ async def gender():
             facename = parsename["name"]
             i['name'] = "Unknown Name"
 
-async def age():
-    for i in faceinfolist:
-        print(i)
-        if 'young' in i:
-            i['age'] = "Young"
-        elif 'child' or 'adolescent' in i:
-            i['age'] = "Young"
-        elif 'preschool' or 'elementary school' in i:
-            i['age'] = "Young"
-        elif 'adult' or 'festival' or 'red carpet' in i:
-            i['age'] = "Adult"
-        else:
-            i['age'] = "Senior"
-
-
-async def job():
-    for i in faceinfolist:
-        if 'musician' in i:
-            i['job'] = "Musician"
-        elif 'singer' in i:
-            i['job'] = "Musician"
-        elif 'rugby' in i:
-            i['job'] = "Athlete"
-        elif 'scholar' in i:
-            i['job'] = "Teacher"
-        elif 'elegant' in i:
-            i['job'] = "Social Services"
-        elif 'fashion' in i:
-            i['job'] = "Entrepreneur"
-        elif 'pretty' in i:
-            i['job'] = "Performing Arts"
-        elif 'young' or 'preschool' or 'elementary school' in i:
-            i['job'] = "Student"
-        elif 'nature' in i:
-            i['job'] = "Engineer"
-        elif 'writer' in i:
-            i['job'] = "Writer"
-        else:
-            i['job'] = "Unemployed"
 
 async def allinfo():
 	await getfaces()
-	await gender()
-	await job()
-	await age()
+	await fakename()
+
 
 @app.route('/index', methods=["POST", "GET"])
 def game():
@@ -263,7 +222,6 @@ def game():
         data = request.form.to_dict()
         return get_guess(data)
     else:
-        # asyncio.run(getfaces())
         asyncio.run(allinfo())
         print("Fired all API's")
         humanface = f'./static/assets/images/human{random.randrange(1,10)}.jpg'
