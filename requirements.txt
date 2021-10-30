@@ -4,5 +4,6 @@ Pillow
 clarifai
 clarifai_grpc
 psycopg2
+grpcio
 requests
 gunicorn 
