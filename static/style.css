@@ -384,27 +384,32 @@ text-align: center;
         margin-top: 70%;
         font-size: 60%;
     }
+
+    #loading1{
+        font-size: 14pt;
+    }
     #loading2 {
         font-size: 172%;
+        margin-top: 3%;
     }
     #babybutton {
         font-size: 20pt;
-        width: 45%;
+        width: 40%;
     }
     #loginbutton {
         margin-bottom: 8%;
         font-size: 35pt;
-        margin-left: 26%;
+        margin-left: 10%;
     }
     #signintext {
         font-size: 40pt;
         text-align: center;
     }
     #username {
-        margin-left: 16%;
+        margin-left: 8%;
     }
     #password {
-        margin-left: 16%;
+        margin-left: 8%;
     }
     #register {
         text-align: center;
@@ -456,6 +461,14 @@ text-align: center;
         cursor: pointer;
         animation: colorflash .5s;
     }
+
+    #cardgrid {
+        grid-template-columns: auto;
+    }
+    #nextbutton {
+    margin-left: 23%;
+    }
+
     #guess {
         text-align: center;
         margin-top: 50%;
@@ -466,7 +479,7 @@ text-align: center;
         padding: 9%;
     }
 #progressBar2 {
-    margin-left: 28%;
+    margin-left: 0%;
     padding: 14%;
 }
 #progressBar3 {
